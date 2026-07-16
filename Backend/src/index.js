@@ -9,7 +9,23 @@ import { judgeResponses } from "./responces/judgeResponse.js";
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors({ origin: process.env.FRONTEND_URL || "http://localhost:5173" }));
+// Support multiple allowed origins via a comma-separated FRONTEND_URL env var
+// e.g. FRONTEND_URL=http://localhost:5173,https://your-app.vercel.app
+const ALLOWED_ORIGINS = (process.env.FRONTEND_URL || "http://localhost:5173")
+  .split(",")
+  .map((o) => o.trim());
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (e.g. curl, Postman, server-to-server)
+      if (!origin) return callback(null, true);
+      if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+      callback(new Error(`CORS: origin '${origin}' not allowed`));
+    },
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // Model registry — maps a model key to its handler function
