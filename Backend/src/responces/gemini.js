@@ -15,7 +15,7 @@ export async function geminiResponse(input) {
     console.log(interaction.output_text)
     return interaction.output_text;
   } catch (error) {
-    console.log(error)
-    return error;
+    console.error(`[geminiResponse] Error:`, error?.error?.message ?? error?.message ?? error);
+    throw error;
   }
 }

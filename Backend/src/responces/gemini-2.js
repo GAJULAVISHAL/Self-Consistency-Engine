@@ -27,7 +27,7 @@ export async function gemmaResponse(input) {
     console.log(interaction.output_text)
     return interaction.output_text;
   } catch (error) {
-    console.log(error)
-    return error;
+    console.error(`[gemmaResponse] Error:`, error?.error?.message ?? error?.message ?? error);
+    throw error;
   }
 }

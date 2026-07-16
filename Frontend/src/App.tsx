@@ -1,4 +1,5 @@
-import { useRef, useState, KeyboardEvent } from "react";
+import { useRef, useState } from "react";
+import type { KeyboardEvent } from "react";
 import { useTheme } from "./hooks/useTheme";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { ModelCard } from "./components/ModelCard";
@@ -7,7 +8,7 @@ import { SkeletonCard, SkeletonJudgement } from "./components/SkeletonCard";
 import { queryModel, judgeModelResponses, type ModelResponse } from "./services/api";
 
 // All models the engine fans out to
-const MODELS = ["gemini-2.5-flash-lite", "gemma-4-31b-it", "o3-mini"] as const;
+const MODELS = ["gemini-2.5-flash-lite", "o3-mini", "gemma-4-31b-it"] as const;
 
 type Phase = "idle" | "querying" | "judging" | "done" | "error";
 
