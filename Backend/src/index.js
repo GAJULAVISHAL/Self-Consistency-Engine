@@ -7,9 +7,9 @@ import { openaiResponse } from "./responces/openai.js";
 import { judgeResponses } from "./responces/judgeResponse.js";
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: process.env.FRONTEND_URL || "http://localhost:5173" }));
 app.use(express.json());
 
 // Model registry — maps a model key to its handler function
